@@ -20,11 +20,11 @@
                     <ul class="generic-list-item">
                         <li><a href="index">Home</a></li>
                         <li><a href="about">About us</a></li>
-                        <li><a href="#">Contact us</a></li>
+                        <li><a href="contact">Contact us</a></li>
                         <li><a href="service">Service</a></li>
                         <li><a href="#">Location</a></li>
-                        <li><a href="#">Track Shipment</a></li>
-                        <li><a href="#">Media</a></li>
+                        <li><a href="track-shipment">Track Shipment</a></li>
+                        <li><a href="media">Media</a></li>
                     </ul>
                 </div><!-- end footer-item -->
             </div><!-- end col-lg-3 -->

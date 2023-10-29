@@ -3973,6 +3973,7 @@ div.datedropper .picker .pick-lg-b li {
 .img-bg-2,
 .img-bg-3,
 .img-bg-4,
+.img-bg-5,
 .pattern-bg {
     position: relative;
     background-size: cover;
@@ -3990,6 +3991,9 @@ div.datedropper .picker .pick-lg-b li {
 }
 .img-bg-4{
     background-image: url(../image/service-top.jpg);
+}
+.img-bg-5 {
+    background-image: url(../image/media-top.jpg);
 }
 .overlay {
     position: absolute;
