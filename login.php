@@ -1,14 +1,53 @@
-
-
 <!--======================================
         START HEADER AREA
     ======================================-->
-    <?php 
+<?php 
 include('header.php');
-    ?>
+?>
 <!--======================================
         END HEADER AREA
 ======================================-->
+
+<?php
+    if (isset($_POST['login'])) {
+        $email = cleaninput($_POST['email']);
+        $password = cleaninput($_POST['password']);
+
+        $stmt = $conn->prepare("SELECT * FROM admin WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $hashed_password = $row['password'];
+
+            if (password_verify($password, $hashed_password)) {
+                session_start();
+                $_SESSION['login'] = true;
+                header('location: dashboard');
+                exit();
+            } else {
+                $_SESSION['msg'] = '
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Invalid Email or Password submitted!!</strong> 
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>';
+            }
+        } else {
+            $_SESSION['msg'] = '
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Invalid Email or Password submitted!!</strong> 
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>';
+        }
+    }
+?>
+
 
 <!-- ================================
     START BREADCRUMB AREA
@@ -50,18 +89,15 @@ include('header.php');
                     <div class="card-body">
                         <h3 class="card-title text-center fs-24 lh-35 pb-4">Login to Your Account!</h3>
                         <div class="section-block"></div>
-                        <form method="post" class="pt-4" action="dashboard">
-                        <h5 style="color:green;">
-          <?php echo $_SESSION['msg']; ?>
-                            </h5>
+                        <form method="post" class="pt-4" action="#">
                             <h5 style="color:red;">
-          <?php echo $_SESSION['msg2']; ?>
+          <?php  echo isset($_SESSION['mgs'])?$_SESSION['mgs']:""?>
                             </h5>
                         
                             <div class="input-box">
                                 <label class="label-text">Email</label>
                                 <div class="form-group">
-                    <input class="form-control form--control" type="text" name="email" placeholder="Email">
+                    <input class="form-control form--control" type="text" name="email" placeholder="Email" required>
                                     <span class="la la-user input-icon"></span>
                                 </div>
                             </div><!-- end input-box -->
@@ -69,7 +105,7 @@ include('header.php');
                                 <label class="label-text">Password</label>
                                 <div class="input-group mb-3">
                                     <span class="la la-lock input-icon"></span>
-             <input class="form-control form--control password-field" type="password" name="pass" placeholder="Password">
+             <input class="form-control form--control password-field" type="password" name="password" placeholder="Password" required>
                                     <div class="input-group-append">
                                         <button class="btn theme-btn theme-btn-transparent toggle-password" type="button">
                                             <svg class="eye-on" xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 0 24 24" width="22px" fill="#7f8897"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 6c3.79 0 7.17 2.13 8.82 5.5C19.17 14.87 15.79 17 12 17s-7.17-2.13-8.82-5.5C4.83 8.13 8.21 6 12 6m0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 5c1.38 0 2.5 1.12 2.5 2.5S13.38 14 12 14s-2.5-1.12-2.5-2.5S10.62 9 12 9m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7z"/></svg>
@@ -81,12 +117,12 @@ include('header.php');
                             <div class="btn-box">
                                 <div class="d-flex align-items-center justify-content-between pb-4">
                                     <div class="custom-control custom-checkbox fs-15">
-                                        <input type="checkbox" class="custom-control-input" id="rememberMeCheckbox" required>
+                                        <input type="checkbox" class="custom-control-input" id="rememberMeCheckbox" >
                                         <label class="custom-control-label custom--control-label" for="rememberMeCheckbox">Remember Me</label>
                                     </div><!-- end custom-control -->
                                     <a href="recover.php" class="btn-text">Forgot my password?</a>
                                 </div>
-                                <button class="btn theme-btn" type="submit">Login Account <i class="la la-arrow-right icon ml-1"></i></button>
+                                <button class="btn theme-btn" type="submit" name="login">Login Account <i class="la la-arrow-right icon ml-1"></i></button>
                                 <p class="fs-14 pt-2">Don't have an account? <a href="sign-up.php" class="text-color hover-underline">Register</a></p>
                             </div><!-- end btn-box -->
                         </form>
@@ -108,7 +144,10 @@ include('header.php');
 <!-- ================================
           END FOOTER AREA
 ================================= -->
+<?php 
+unset($_SESSION['msg']);
 
+?>
 <!-- start scroll top -->
 <div id="scroll-top">
     <i class="la la-arrow-up" title="Go top"></i>
@@ -126,8 +165,3 @@ include('header.php');
 </body>
 
 </html>
-<?php 
-unset($_SESSION['msg']);
-unset($_SESSION['msg2']);
-
-?>

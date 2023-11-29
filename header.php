@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-@session_start();
-// require("conn.php");
+// @session_start();
+require("function.php");
+
 ?>
 <!-- Mirrored from techydevs.com/demos/themes/html/aduca-demo/aduca/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 07 Oct 2021 14:32:32 GMT -->
 <head>
