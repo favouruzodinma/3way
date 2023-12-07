@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php 
-require("../function.php");
+<?php
+  @session_start();
 
-// if($_SESSION['login']!=true){
-//     header("location:login");
-//  }
- ?>
+  if (!isset($_SESSION['admin'])) {
+    header("location:../admin_login");
+  }
+  require_once('../_db.php');
+?>
 <!-- Mirrored from techydevs.com/demos/themes/html/aduca-demo/aduca/dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 07 Oct 2021 14:35:42 GMT -->
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
@@ -153,7 +154,7 @@ require("../function.php");
                                                             <li><div class="section-block"></div></li>
                                                             <li><div class="section-block"></div></li>
                                                             <li>
-                                                                <a href="dashboard-message.html">
+                                                                <a href="message">
                                                                     <i class="la la-envelope mr-1"></i> Messages
                                                                     <span class="badge bg-info text-white ml-2 p-1">12+</span>
                                                                 </a>

@@ -1,4 +1,71 @@
+<?php
+// print_r($_POST)
 
+if(isset($_POST['register'])){
+	$userid = ("3WC" .rand(2039947 , 4857891));
+
+	$flname =$_POST["flname"];
+	$email =$_POST["email"];
+	$password =$_POST["password"];
+	$cpassword =$_POST["cpassword"];
+	$ipaddress = $_SERVER['REMOTE_ADDR'];
+	
+	$passwordHash = password_hash($password, PASSWORD_DEFAULT);
+
+	$errors = array();
+
+	if (empty($flname)OR empty($email) OR empty($password) OR empty($password)){
+		array_push($errors,"All field ar e required");
+	}
+	if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+		array_push($errors,"Email is not Valid");
+	}
+	if(strlen($password)<8){
+		array_push($errors,"Character must be at least 8 characters long ");
+	}
+	if($password!==$cpassword){
+		array_push($errors,"Password and comfirm password dont match");
+	}
+	require_once('_db.php');
+	$sql = "SELECT * FROM user WHERE email='$email' ";
+	$result= mysqli_query($conn,$sql);
+	$rowCount = mysqli_num_rows($result);
+	if($rowCount>0){
+		array_push($errors,"Email has already been used..");
+	}
+	if(count($errors)>0){
+		foreach($errors as $error){
+			$error = "
+				<div class='alert alert-danger d-flex justify-space-between'>
+				<strong>$error</strong> 
+				<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+				<span aria-hidden='true'>&times;</span>
+				</button>
+				</div>";
+			// echo "<div class='alert alert-danger'>$error</div>";
+		}
+	}else{
+		require_once('_db.php');
+		$sql = "INSERT INTO  user (userid ,flname, email, password, ip_address) VALUES (?,?,?,?,?)";
+		$stmt = mysqli_stmt_init($conn);
+		$prepareStmt = mysqli_stmt_prepare($stmt,$sql);
+		if($prepareStmt){
+			mysqli_stmt_bind_param($stmt,"sssss",$userid,$flname,$email,$passwordHash, $ipaddress);
+			mysqli_stmt_execute($stmt);
+			$error = "
+			<div class='alert alert-success d-flex justify-space-between'>
+			<strong>Registered Successfully...  </strong> 
+			<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+			<span aria-hidden='true'>&times;</span>
+			</button>
+			</div>";
+		}else{
+			die("something went wrong");
+		}
+	}
+
+}
+?>
 <!--======================================
         START HEADER AREA
     ======================================-->
@@ -49,53 +116,22 @@
                     <div class="card-body">
                         <h3 class="card-title text-center fs-24 lh-35 pb-4">Create a free Account !</h3>
                         <div class="section-block"></div>
-                        <form method="Post" class="pt-4" action="functions/signup-process">
+                        <form method="POST" class="pt-4" action="sign-up">
+                            <?php if (isset($error)) : ?>
+								<div ><?php echo $error; ?></div>
+							<?php endif; ?>
                             <div class="input-box">
                                 <label class="label-text">First Name</label>
                                 <div class="form-group">
-                                    <input class="form-control form--control" type="text" name="fname" placeholder="First name" >
+                                    <input class="form-control form--control" type="text" name="flname" placeholder="First name" required>
                                     <span class="la la-user input-icon"></span>
-                                    <span class= "text-danger">
-                                      <?php 
-                                      echo isset($errFname)?$errFname:Null 
-                                       ?>
-                                    </span>
-                                </div>
-                            </div><!-- end input-box -->
-                            <div class="input-box">
-                                <label class="label-text">Last Name</label>
-                                <div class="form-group">
-                                    <input class="form-control form--control" type="text" name="lname" placeholder="Last name" >
-                                    <span class="la la-user input-icon"></span>
-                                    <span class= "text-danger">
-                                      <?php 
-                                      echo isset($errLname)?$errLname:Null 
-                                       ?>
-                                    </span>
-                                </div>
-                            </div><!-- end input-box -->
-                            <div class="input-box">
-                                <label class="label-text">Username</label>
-                                <div class="form-group">
-                                    <input class="form-control form--control" type="text" name="uname" placeholder="Username" >
-                                    <span class="la la-user input-icon"></span>
-                                    <span class= "text-danger">
-                                      <?php 
-                                      echo isset($errUname)?$errUname:Null 
-                                       ?>
-                                    </span>
                                 </div>
                             </div><!-- end input-box -->
                             <div class="input-box">
                                 <label class="label-text">Email Address</label>
                                 <div class="form-group">
-                                    <input class="form-control form--control" type="email" name="email" placeholder="Enter email address" >
+                                    <input class="form-control form--control" type="email" name="email" placeholder="Enter email address" required>
                                     <span class="la la-envelope input-icon"></span>
-                                    <span class= "text-danger">
-                                      <?php 
-                                      echo isset($errEmail)?$errEmail:Null 
-                                       ?>
-                                    </span>
                                 </div>
                             </div><!-- end input-box -->
                             <div class="input-box">
@@ -109,11 +145,6 @@
                                             <svg class="eye-off" xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 0 24 24" width="22px" fill="#7f8897"><path d="M0 0h24v24H0V0zm0 0h24v24H0V0zm0 0h24v24H0V0zm0 0h24v24H0V0z" fill="none"/><path d="M12 6c3.79 0 7.17 2.13 8.82 5.5-.59 1.22-1.42 2.27-2.41 3.12l1.41 1.41c1.39-1.23 2.49-2.77 3.18-4.53C21.27 7.11 17 4 12 4c-1.27 0-2.49.2-3.64.57l1.65 1.65C10.66 6.09 11.32 6 12 6zm-1.07 1.14L13 9.21c.57.25 1.03.71 1.28 1.28l2.07 2.07c.08-.34.14-.7.14-1.07C16.5 9.01 14.48 7 12 7c-.37 0-.72.05-1.07.14zM2.01 3.87l2.68 2.68C3.06 7.83 1.77 9.53 1 11.5 2.73 15.89 7 19 12 19c1.52 0 2.98-.29 4.32-.82l3.42 3.42 1.41-1.41L3.42 2.45 2.01 3.87zm7.5 7.5l2.61 2.61c-.04.01-.08.02-.12.02-1.38 0-2.5-1.12-2.5-2.5 0-.05.01-.08.01-.13zm-3.4-3.4l1.75 1.75c-.23.55-.36 1.15-.36 1.78 0 2.48 2.02 4.5 4.5 4.5.63 0 1.23-.13 1.77-.36l.98.98c-.88.24-1.8.38-2.75.38-3.79 0-7.17-2.13-8.82-5.5.7-1.43 1.72-2.61 2.93-3.53z"/></svg>
                                         </button>
                                     </div>
-                                    <span class= "text-danger">
-                                      <?php 
-                                      echo isset($errPassword)?$errPassword:Null 
-                                       ?>
-                                    </span>
                                 </div>
                             </div><!-- end input-box -->
                             <div class="input-box">
@@ -127,17 +158,12 @@
                                             <svg class="eye-off" xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 0 24 24" width="22px" fill="#7f8897"><path d="M0 0h24v24H0V0zm0 0h24v24H0V0zm0 0h24v24H0V0zm0 0h24v24H0V0z" fill="none"/><path d="M12 6c3.79 0 7.17 2.13 8.82 5.5-.59 1.22-1.42 2.27-2.41 3.12l1.41 1.41c1.39-1.23 2.49-2.77 3.18-4.53C21.27 7.11 17 4 12 4c-1.27 0-2.49.2-3.64.57l1.65 1.65C10.66 6.09 11.32 6 12 6zm-1.07 1.14L13 9.21c.57.25 1.03.71 1.28 1.28l2.07 2.07c.08-.34.14-.7.14-1.07C16.5 9.01 14.48 7 12 7c-.37 0-.72.05-1.07.14zM2.01 3.87l2.68 2.68C3.06 7.83 1.77 9.53 1 11.5 2.73 15.89 7 19 12 19c1.52 0 2.98-.29 4.32-.82l3.42 3.42 1.41-1.41L3.42 2.45 2.01 3.87zm7.5 7.5l2.61 2.61c-.04.01-.08.02-.12.02-1.38 0-2.5-1.12-2.5-2.5 0-.05.01-.08.01-.13zm-3.4-3.4l1.75 1.75c-.23.55-.36 1.15-.36 1.78 0 2.48 2.02 4.5 4.5 4.5.63 0 1.23-.13 1.77-.36l.98.98c-.88.24-1.8.38-2.75.38-3.79 0-7.17-2.13-8.82-5.5.7-1.43 1.72-2.61 2.93-3.53z"/></svg>
                                         </button>
                                     </div>
-                                    <span class= "text-danger">
-                                      <?php 
-                                      echo isset($errCpassword)?$errCpassword:Null 
-                                       ?>
-                                    </span>
                                 </div>
                             </div><!-- end input-box -->
                             <div class="btn-box">
                                 <!-- end custom-control -->
-                                <button class="btn theme-btn" type="submit" name="signup">Register Account <i class="la la-arrow-right icon ml-1"></i></button>
-                                <p class="fs-14 pt-2">Already have an account? <a href="login.php" class="text-color hover-underline">Log in</a></p>
+                                <button class="btn theme-btn" type="submit" name="register">Register Account <i class="la la-arrow-right icon ml-1"></i></button>
+                                <p class="fs-14 pt-2">Already have an account? <a href="login" class="text-color hover-underline">Log in</a></p>
                             </div><!-- end btn-box -->
                         </form>
                     </div><!-- end card-body -->

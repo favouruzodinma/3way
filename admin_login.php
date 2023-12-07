@@ -1,8 +1,53 @@
-<?php session_start(); ?>
-
+<?php
+  session_start();
+  if (isset($_SESSION['admin'])) {
+	header("location:admin_dashboard/dashboard");
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
+<?php
+require_once('./_db.php'); // Your database connection script
 
+if (isset($_POST['admin_login'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    $sql = "SELECT * FROM admin WHERE email = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    if ($result->num_rows === 1) {
+        $admin = $result->fetch_assoc();
+
+        if (password_verify($password, $admin['password'])) {
+            $_SESSION['userid'] = $admin['userid'];
+			$_SESSION['admin'] = 'yes';
+            header("Location: admin_dashboard/dashboard");
+            exit;
+        } else {
+            $error = "
+            <div class='' role='alert'>
+                <strong>Password does not match this email address!</strong> 
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                </button>
+            </div>";
+        }
+    } else {
+        $error = "
+        <div class='' role='alert'>
+            <strong>Invalid Email or Password submitted!</strong> 
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                <span aria-hidden='true'>&times;</span>
+            </button>
+        </div>";
+    }
+}
+?>
 
 <head>
   <meta charset="UTF-8">
@@ -37,10 +82,13 @@
                 <h4>Login</h4>
               </div>
               <div class="card-body">
-                <form method="POST" action="login_process" class="needs-validation" >
+                <form method="POST" action="./admin_login" class="needs-validation" >
+                    <?php if (isset($error)) : ?>
+                      <div class="alert alert-danger"><?php echo $error; ?></div>
+                    <?php endif; ?>
                   <div class="form-group">
                     <label for="email">Email</label>
-                    <input id="email" type="email" class="form-control" name="email" tabindex="1" required autofocus>
+                    <input id="email" type="email" class="form-control" name="email" tabindex="1"  autofocus>
                     <div class="invalid-feedback">
                       Please fill in your email
                     </div>
@@ -54,13 +102,13 @@
                         </a>
                       </div>
                     </div>
-                    <input id="password" type="password" class="form-control" name="password" tabindex="2" required>
+                    <input id="password" type="password" class="form-control" name="password" tabindex="2" >
                     <div class="invalid-feedback">
                       please fill in your password
                     </div>
                   </div>
                   <div class="form-group">
-                    <button type="submit" name="admin_log" class="btn btn-lg btn-block btn-auth-color" tabindex="4">
+                    <button type="submit" name="admin_login" class="btn btn-lg btn-block btn-auth-color" tabindex="4">
                       Login
                     </button>
                   </div>
@@ -81,16 +129,8 @@
   <!-- Template JS File -->
   <script src="assets/js/scripts.js"></script>
   <script src="shared/toastr.min.js"></script>
-
-  <?php
-if(isset($_SESSION['msg'])){ ?>
-<script> toastr.info("<?php echo $_SESSION['msg']; ?>"); </script>
-<?php } ?>
   
 </body>
 
 
 </html>
-<?php
-unset($_SESSION['msg']);
-?>

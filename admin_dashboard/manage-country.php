@@ -1,3 +1,49 @@
+<?php
+// print_r($_POST)
+
+if(isset($_POST['creat_country'])){
+	$country_code = $_POST["country_code"];
+
+	$country_name =$_POST["country_name"];
+
+	$errors = array();
+
+	if(empty($country_name)){
+		array_push($errors,"A country name must be inputed");
+	}
+	if(count($errors)>0){
+		foreach($errors as $error){
+			$error = "
+				<div class='alert alert-danger d-flex justify-space-between'>
+				<strong>$error</strong> 
+				<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+				<span aria-hidden='true'>&times;</span>
+				</button>
+				</div>";
+			// echo "<div class='alert alert-danger'>$error</div>";
+		}
+	}else{
+		require_once('../_db.php');
+		$sql = "INSERT INTO  country (country_code ,country_name) VALUES (?,?   )";
+		$stmt = mysqli_stmt_init($conn);
+		$prepareStmt = mysqli_stmt_prepare($stmt,$sql);
+		if($prepareStmt){
+			mysqli_stmt_bind_param($stmt,"ss",$country_code,$country_name);
+			mysqli_stmt_execute($stmt);
+			$error = "
+			<div class='alert alert-success d-flex justify-space-between'>
+			<strong>Country Successfully Created...  </strong> 
+			<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+			<span aria-hidden='true'>&times;</span>
+			</button>
+			</div>";
+		}else{
+			die("something went wrong");
+		}
+	}
+
+}
+?>
 <?php include('include/dashboard-header.php') ?>
 <!-- end header-menu-area -->
 <!--======================================
@@ -20,13 +66,15 @@
                     
                 </div><!-- end media -->
                 <div class="file-upload-wrap file-upload-wrap-2 file--upload-wrap">
-                    <input type="file" name="files[]" class="multi file-upload-input">
-                    <span class="file-upload-text"><i class="la la-upload mr-2"></i>Upload a course</span>
-                </div><!-- file-upload-wrap -->
+                <a href="javascript:void(0)" data-toggle="modal" data-target="#countryModal" class="btn btn-outline-dark"><i class="la la-plus-circle mr-2"></i>New Country</a>
+                </div><!-- create modal -->
             </div><!-- end breadcrumb-content -->
             <div class="section-block mb-5"></div>
             <div class="dashboard-heading mb-5">
                 <h3 class="fs-22 font-weight-semi-bold">Manage Country</h3>
+                <?php if (isset($error)) : ?>
+                    <div ><?php echo $error; ?></div>
+                <?php endif; ?>
             </div>
             <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="earning" role="tabpanel" aria-labelledby="earning-tab">
@@ -49,34 +97,6 @@
                                 <div class="media media-card align-items-center">
                                     <div class="media-body">
                                         <h5 class="fs-15"><a href="#">Ghana</a></h5>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                <ul class="generic-list-item">
-                                    <li>#090909</li>
-                                </ul>
-                            </th>
-                            <td>
-                                <div class="media media-card align-items-center">
-                                    <div class="media-body">
-                                        <h5 class="fs-15"><a href="#">Eyght</a></h5>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                <ul class="generic-list-item">
-                                    <li>#090909</li>
-                                </ul>
-                            </th>
-                            <td>
-                                <div class="media media-card align-items-center">
-                                    <div class="media-body">
-                                        <h5 class="fs-15"><a href="#">Nigeria</a></h5>
                                     </div>
                                 </div>
                             </td>
@@ -132,54 +152,28 @@
 <!-- end scroll top -->
 
 <!-- Modal -->
-<div class="modal fade modal-container" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
+<div class="modal fade modal-container" id="countryModal" tabindex="-1" role="dialog" aria-labelledby="CountryModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body text-center">
-                <span class="la la-exclamation-circle fs-60 text-warning"></span>
-                <h4 class="modal-title fs-19 font-weight-semi-bold pt-2 pb-1" id="deleteModalTitle">Your account will be deleted permanently!</h4>
-                <p>Are you sure you want to delete your account?</p>
-                <div class="btn-box pt-4">
-                    <button type="button" class="btn font-weight-medium mr-3" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn theme-btn theme-btn-sm lh-30">Ok, Delete</button>
-                </div>
+                <h4 class="modal-title fs-19 font-weight-semi-bold pt-2 pb-1" id="CountryModalTitle">Create New Country</h4>
+                <form method="post" action="manage-country">
+                    <div class="form-group">
+                        <input class="form-control form--control pl-3" type="text" name="country_code" placeholder="Country Code" required>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control form--control pl-3" type="text" name="country_name" placeholder="Country Name" required>
+                    </div>
+                    <div class="btn-box pt-4">
+                        <button type="button" class="btn font-weight-medium mr-3" data-dismiss="modal">Cancel</button>
+                        <button  type="submit" class="btn btn-primary" name="creat_country">create</button>
+                    </div>
+                </form>
             </div><!-- end modal-body -->
         </div><!-- end modal-content -->
     </div><!-- end modal-dialog -->
 </div><!-- end modal -->
 
-<!-- Modal -->
-<div class="modal fade modal-container" id="ratingModal" tabindex="-1" role="dialog" aria-labelledby="ratingModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header border-bottom-gray">
-                <div class="pr-2">
-                    <h5 class="modal-title fs-19 font-weight-semi-bold lh-24" id="ratingModalTitle">
-                        How would you rate this course?
-                    </h5>
-                </div>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="la la-times"></span>
-                </button>
-            </div><!-- end modal-header -->
-            <div class="modal-body text-center py-5">
-                <div class="leave-rating mt-5">
-                    <input type="radio" name='rate' id="star5"/>
-                    <label for="star5" class="fs-45"></label>
-                    <input type="radio" name='rate' id="star4"/>
-                    <label for="star4" class="fs-45"></label>
-                    <input type="radio" name='rate' id="star3"/>
-                    <label for="star3" class="fs-45"></label>
-                    <input type="radio" name='rate' id="star2"/>
-                    <label for="star2" class="fs-45"></label>
-                    <input type="radio" name='rate' id="star1"/>
-                    <label for="star1" class="fs-45"></label>
-                    <div class="rating-result-text fs-20 pb-4"></div>
-                </div><!-- end leave-rating -->
-            </div><!-- end modal-body -->
-        </div><!-- end modal-content -->
-    </div><!-- end modal-dialog -->
-</div><!-- end modal -->
 
 <!-- template js files -->
 <script src="js/jquery-3.4.1.min.js"></script>

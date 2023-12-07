@@ -15,40 +15,12 @@
             <i class="la la-bars mr-1"></i> Dashboard Nav
         </div>
         <div class="container-fluid">
-            <div class="breadcrumb-content d-flex flex-wrap align-items-center justify-content-between mb-5">
-                <div class="media media-card align-items-center">
-                    <div class="media-img media--img media-img-md rounded-full">
-                        <img class="rounded-full" src="images/small-avatar-1.jpg" alt="Student thumbnail image">
-                    </div>
-                    <div class="media-body">
-                        <h2 class="section__title fs-30">Howdy, Tim Buchalka</h2>
-                        <div class="rating-wrap d-flex align-items-center pt-2">
-                            <div class="review-stars">
-                                <span class="rating-number">4.4</span>
-                                <span class="la la-star"></span>
-                                <span class="la la-star"></span>
-                                <span class="la la-star"></span>
-                                <span class="la la-star"></span>
-                                <span class="la la-star-o"></span>
-                            </div>
-                            <span class="rating-total pl-1">(20,230)</span>
-                        </div><!-- end rating-wrap -->
-                    </div><!-- end media-body -->
-                </div><!-- end media -->
-                <div class="file-upload-wrap file-upload-wrap-2 file--upload-wrap">
-                    <input type="file" name="files[]" class="multi file-upload-input">
-                    <span class="file-upload-text"><i class="la la-upload mr-2"></i>Upload a course</span>
-                </div><!-- file-upload-wrap -->
-            </div><!-- end breadcrumb-content -->
-            <div class="section-block mb-5"></div>
             <div class="dashboard-heading mb-5">
                 <h3 class="fs-22 font-weight-semi-bold">Reviews</h3>
             </div>
             <div class="review-wrap">
                 <div class="media media-card border-bottom border-bottom-gray pb-4 mb-4">
-                    <div class="media-img mr-4 rounded-full">
-                        <img class="rounded-full" src="images/small-avatar-1.jpg" alt="User image">
-                    </div>
+                    
                     <div class="media-body">
                         <div class="d-flex flex-wrap align-items-baseline justify-content-between pb-1">
                             <h5>Microsoft SQL Server 2019 For Everyone</h5>
@@ -67,51 +39,15 @@
                             </div>
                         </div>
                         <div class="d-flex flex-wrap align-items-center pb-1">
-                            <div class="review-stars">
-                                <span class="la la-star"></span>
-                                <span class="la la-star"></span>
-                                <span class="la la-star"></span>
-                                <span class="la la-star"></span>
-                                <span class="la la-star"></span>
-                            </div>
+                    
                             <p class="fs-14 pl-1">by<a href="#" class="text-color mx-1 hover-underline">John Doe</a>2 days ago</p>
                         </div>
-                        <p class="pb-3">Lorem ipsum dolor sit amet, dolores mandamus moderatius ea ius, sed civibus vivendum imperdiet ei, amet tritani sea id. Ut veri diceret fierent mei, qui facilisi suavitate euripidis ad. In vim mucius menandri convenire, an brute zril vis. Ancillae delectus necessitatibus no eam, at porro solet veniam mel, ad everti nostrud vim.</p>
-                        <a class="btn theme-btn theme-btn-sm theme-btn-transparent" href="#" data-toggle="modal" data-target="#replyModal"><i class="la la-reply mr-1"></i> Reply to this review</a>
-                    </div>
-                </div><!-- end media -->
-                <div class="media media-card border-bottom border-bottom-gray pb-4 mb-4 review-reply">
-                    <div class="media-img mr-4 rounded-full">
-                        <img class="rounded-full" src="images/small-avatar-1.jpg" alt="User image">
-                    </div>
-                    <div class="media-body">
-                        <div class="d-flex flex-wrap align-items-baseline justify-content-between pb-1">
-                            <h5>Author Response</h5>
-                            <div class="generic-action-wrap generic--action-wrap-3">
-                                <div class="dropdown">
-                                    <a class="action-btn" href="#" role="button" id="dropdownMenuLinkTwo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="la la-ellipsis-v"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLinkTwo">
-                                        <a class="dropdown-item" href="#">Copy</a>
-                                        <a class="dropdown-item" href="#">Cut</a>
-                                        <a class="dropdown-item" href="#">Edit</a>
-                                        <a class="dropdown-item" href="#">Delete</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex flex-wrap align-items-center pb-1">
-                            <p class="fs-14 pl-1">2 days ago</p>
-                        </div>
-                        <p class="pb-3">Ancillae delectus necessitatibus no eam, at porro solet veniam mel, ad everti nostrud vim. Eam no menandri pertinacia deterruisset.</p>
+                        <p class="pb-3"> why am i not getting my package yet </p>
                         <a class="btn theme-btn theme-btn-sm theme-btn-transparent" href="#" data-toggle="modal" data-target="#replyModal"><i class="la la-reply mr-1"></i> Reply to this review</a>
                     </div>
                 </div><!-- end media -->
                 <div class="media media-card border-bottom border-bottom-gray pb-4 mb-4">
-                    <div class="media-img mr-4 rounded-full">
-                        <img class="rounded-full" src="images/small-avatar-1.jpg" alt="User image">
-                    </div>
+                    
                     <div class="media-body">
                         <div class="d-flex flex-wrap align-items-baseline justify-content-between pb-1">
                             <h5>Microsoft SQL Server 2019 For Everyone</h5>
@@ -130,23 +66,15 @@
                             </div>
                         </div>
                         <div class="d-flex flex-wrap align-items-center pb-1">
-                            <div class="review-stars">
-                                <span class="la la-star"></span>
-                                <span class="la la-star"></span>
-                                <span class="la la-star"></span>
-                                <span class="la la-star"></span>
-                                <span class="la la-star"></span>
-                            </div>
+                    
                             <p class="fs-14 pl-1">by<a href="#" class="text-color mx-1 hover-underline">John Doe</a>2 days ago</p>
                         </div>
-                        <p class="pb-3">Lorem ipsum dolor sit amet, dolores mandamus moderatius ea ius, sed civibus vivendum imperdiet ei, amet tritani sea id. Ut veri diceret fierent mei, qui facilisi suavitate euripidis ad. In vim mucius menandri convenire, an brute zril vis. Ancillae delectus necessitatibus no eam, at porro solet veniam mel, ad everti nostrud vim.</p>
+                        <p class="pb-3"> why am i not getting my package yet </p>
                         <a class="btn theme-btn theme-btn-sm theme-btn-transparent" href="#" data-toggle="modal" data-target="#replyModal"><i class="la la-reply mr-1"></i> Reply to this review</a>
                     </div>
                 </div><!-- end media -->
                 <div class="media media-card border-bottom border-bottom-gray pb-4 mb-4">
-                    <div class="media-img mr-4 rounded-full">
-                        <img class="rounded-full" src="images/small-avatar-1.jpg" alt="User image">
-                    </div>
+                    
                     <div class="media-body">
                         <div class="d-flex flex-wrap align-items-baseline justify-content-between pb-1">
                             <h5>Microsoft SQL Server 2019 For Everyone</h5>
@@ -165,23 +93,15 @@
                             </div>
                         </div>
                         <div class="d-flex flex-wrap align-items-center pb-1">
-                            <div class="review-stars">
-                                <span class="la la-star"></span>
-                                <span class="la la-star"></span>
-                                <span class="la la-star"></span>
-                                <span class="la la-star"></span>
-                                <span class="la la-star"></span>
-                            </div>
+                    
                             <p class="fs-14 pl-1">by<a href="#" class="text-color mx-1 hover-underline">John Doe</a>2 days ago</p>
                         </div>
-                        <p class="pb-3">Lorem ipsum dolor sit amet, dolores mandamus moderatius ea ius, sed civibus vivendum imperdiet ei, amet tritani sea id. Ut veri diceret fierent mei, qui facilisi suavitate euripidis ad. In vim mucius menandri convenire, an brute zril vis. Ancillae delectus necessitatibus no eam, at porro solet veniam mel, ad everti nostrud vim.</p>
+                        <p class="pb-3"> why am i not getting my package yet </p>
                         <a class="btn theme-btn theme-btn-sm theme-btn-transparent" href="#" data-toggle="modal" data-target="#replyModal"><i class="la la-reply mr-1"></i> Reply to this review</a>
                     </div>
                 </div><!-- end media -->
                 <div class="media media-card border-bottom border-bottom-gray pb-4 mb-4">
-                    <div class="media-img mr-4 rounded-full">
-                        <img class="rounded-full" src="images/small-avatar-1.jpg" alt="User image">
-                    </div>
+                    
                     <div class="media-body">
                         <div class="d-flex flex-wrap align-items-baseline justify-content-between pb-1">
                             <h5>Microsoft SQL Server 2019 For Everyone</h5>
@@ -200,16 +120,10 @@
                             </div>
                         </div>
                         <div class="d-flex flex-wrap align-items-center pb-1">
-                            <div class="review-stars">
-                                <span class="la la-star"></span>
-                                <span class="la la-star"></span>
-                                <span class="la la-star"></span>
-                                <span class="la la-star"></span>
-                                <span class="la la-star"></span>
-                            </div>
+                    
                             <p class="fs-14 pl-1">by<a href="#" class="text-color mx-1 hover-underline">John Doe</a>2 days ago</p>
                         </div>
-                        <p class="pb-3">Lorem ipsum dolor sit amet, dolores mandamus moderatius ea ius, sed civibus vivendum imperdiet ei, amet tritani sea id. Ut veri diceret fierent mei, qui facilisi suavitate euripidis ad. In vim mucius menandri convenire, an brute zril vis. Ancillae delectus necessitatibus no eam, at porro solet veniam mel, ad everti nostrud vim.</p>
+                        <p class="pb-3"> why am i not getting my package yet </p>
                         <a class="btn theme-btn theme-btn-sm theme-btn-transparent" href="#" data-toggle="modal" data-target="#replyModal"><i class="la la-reply mr-1"></i> Reply to this review</a>
                     </div>
                 </div><!-- end media -->

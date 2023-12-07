@@ -2,7 +2,7 @@
 <html lang="en">
 <?php
 // @session_start();
-require("function.php");
+require("_db.php");
 
 ?>
 <!-- Mirrored from techydevs.com/demos/themes/html/aduca-demo/aduca/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 07 Oct 2021 14:32:32 GMT -->
@@ -19,7 +19,7 @@ require("function.php");
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
 
     <!-- Favicon -->
-    <link rel="icon" sizes="16x16" href="images/favicon.png">
+    <link rel="icon" sizes="16x16" href="image/logo3.png">
 
     <!-- inject:css -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -82,8 +82,13 @@ require("function.php");
                                 </button>
                             </div>
                             <ul class="generic-list-item d-flex flex-wrap align-items-center fs-14 border-left border-left-gray pl-3 ml-3">
-                                <li class="d-flex align-items-center pr-3 mr-3 border-right border-right-gray"><i class="la la-sign-in mr-1"></i><a href="login">Login</a></li>
-                                <li class="d-flex align-items-center"><i class="la la-user mr-1"></i><a href="sign-up.php"> Register</a></li>
+                            <?php
+                            if (!isset($_SESSION['user'])) { ?>
+                            <li class="d-flex align-items-center pr-3 mr-3 border-right border-right-gray"><i class="la la-sign-in mr-1"></i><a href="login">Login</a></li>
+                            <li class="d-flex align-items-center"><i class="la la-user mr-1"></i><a href="sign-up"> Register</a></li>
+                            <?php }else{ ?>
+                            <li class="d-flex align-items-center pr-3 mr-3 border-right border-right-gray"><i class="la la-sign-in mr-1"></i><a href="logout">LogOut</a></li>
+                            <?php } ?>
                             </ul>
                         </div><!-- end header-widget -->
                     </div><!-- end col-lg-6 -->
